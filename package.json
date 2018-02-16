@@ -1,0 +1,23 @@
+{
+  "name": "rollup-plugin-polyfill",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JRJurman/rollup-plugin-polyfill.git"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Jesse Jurman",
+    "email": "j.r.jurman@gmail.com",
+    "url": "https://github.com/jrjurman"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JRJurman/rollup-plugin-polyfill/issues"
+  },
+  "homepage": "https://github.com/JRJurman/rollup-plugin-polyfill#readme"
+}
