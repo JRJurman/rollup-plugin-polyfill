@@ -1,6 +1,14 @@
 const MagicString = require('magic-string');
 
-module.exports = (main, packages, { sourceMap = true } = {}) => ({
+const methods = {
+  'import': pkg => `import "${pkg}";`,
+  'commonjs': pkg => `require("${pkg}");`,
+};
+
+module.exports = (main, packages, {
+  sourceMap = true,
+  method = 'import',
+} = {}) => ({
   name: 'polyfill',
   transform: (source, id) => {
     if (!id.match(main)) return null;
@@ -8,7 +16,7 @@ module.exports = (main, packages, { sourceMap = true } = {}) => ({
     const magicString = new MagicString(source);
     magicString.prepend(
       packages
-        .map(pkg => `require("${pkg}");`)
+        .map(pkg => methods[method](pkg))
         .join('\n') + '\n\n'
     )
 
@@ -17,4 +25,4 @@ module.exports = (main, packages, { sourceMap = true } = {}) => ({
       map: sourceMap ? magicString.generateMap() : null,
     }
   }
-})
+});

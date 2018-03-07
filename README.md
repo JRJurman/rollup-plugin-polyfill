@@ -1,6 +1,6 @@
 # rollup-plugin-polyfill
 Rollup Plugin to include a polyfill in your bundle.
-Literally injects a require statement in your bundle, which you can then use `rollup-plugin-node-resolve` to resolve.
+Literally injects a require or import statement in your bundle, which you can then use `rollup-plugin-node-resolve` to resolve.
 
 ## API
 ### `polyfill(file, packages)`
@@ -18,7 +18,9 @@ const polyfill = require('rollup-plugin-polyfill')
 const pkg = require('../package.json')
 
 const plugins = [
-  polyfill('tram-one.js', ['es6-object-assign/auto']),
+  polyfill('tram-one.js', ['es6-object-assign/auto'], {
+    method: 'import', // or 'commonjs'
+  }),
   resolve({
     main: true,
     preferBuiltins: true,
