@@ -1,44 +1,35 @@
 # rollup-plugin-polyfill
 Rollup Plugin to include a polyfill in your bundle.
-Literally injects a require or import statement in your bundle, which you can then use `rollup-plugin-node-resolve` to resolve.
+Literally injects a require or import statement in your bundle.
+This is useful if you only want to include certain logic in some variants of
+your build (e.g. polyfills for a UMD).
 
 ## API
-### `polyfill(file, packages)`
+### `polyfill(file, packages[, options])`
 `file` is the module that the package will be prepended to.
 `packages` is a list of modules to be resolved in your bundle.
+`options` (optional) is an object that includes different configurations:
+* `method` can either be `commonjs` or `import`, and determines if a require
+statement or import statement should be prepended to the file. By default
+it is import. _(If you use commonjs, you'll need to resolve require statments
+in the build)_
 
 ## Usage
+Check out the example folder to see it in action!
 ```javascript
-const builtins = require('rollup-plugin-node-builtins')
-const commonjs = require('rollup-plugin-commonjs')
-const globals = require('rollup-plugin-node-globals')
-const resolve = require('rollup-plugin-node-resolve')
 const polyfill = require('rollup-plugin-polyfill')
 
-const pkg = require('../package.json')
-
 const plugins = [
-  polyfill('tram-one.js', ['es6-object-assign/auto'], {
-    method: 'import', // or 'commonjs'
-  }),
-  resolve({
-    main: true,
-    preferBuiltins: true,
-    browser: true
-  }),
-  builtins(),
-  commonjs(),
-  globals(),
-  builtins()
+  polyfill('index.js', ['./thing-to-polyfill'])
 ]
 
 export default {
-  input: 'tram-one.js',
+  input: 'index.js',
   output: {
-    file: pkg.main,
-    format: 'umd'
+    file: 'bundle.js',
+    format: 'umd',
+    name: 'example'
   },
-  plugins: plugins,
-  name: 'tram-one'
+  plugins: plugins
 }
 ```
