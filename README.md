@@ -6,12 +6,13 @@ your build (e.g. polyfills for a UMD).
 
 ## API
 ### `polyfill(file, packages[, options])`
-`file` is the module that the package will be prepended to.
-`packages` is a list of modules to be resolved in your bundle.
-`options` (optional) is an object that includes different configurations:
-* `method` can either be `commonjs` or `import`, and determines if a require
+* `file` is the module that the package will be prepended to.
+* `packages` is a list of modules to be resolved in your bundle.
+* `options` (optional) is an object that includes different configurations:
+  * `method` can either be `'commonjs'` or `'import'`, and determines if a require
 statement or import statement should be prepended to the file. By default
-it is import. _(If you use commonjs, you'll need to resolve require statments
+it is import.
+_(If you use commonjs, you'll need to resolve require statments
 in the build)_
 
 ## Usage
