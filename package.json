@@ -1,14 +1,16 @@
 {
   "name": "rollup-plugin-polyfill",
-  "version": "2.0.1",
-  "description": "",
-  "main": "index.js",
+  "version": "3.0.0",
+  "description": "plugin to prepends bundles with a source file or module",
+  "main": "src/index.js",
   "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JRJurman/rollup-plugin-polyfill.git"
   },
-  "keywords": [],
+  "keywords": [
+    "rollup-plugin"
+  ],
   "author": {
     "name": "Jesse Jurman",
     "email": "j.r.jurman@gmail.com",
@@ -20,6 +22,9 @@
   },
   "homepage": "https://github.com/JRJurman/rollup-plugin-polyfill#readme",
   "dependencies": {
-    "magic-string": "^0.22.4"
+    "magic-string": "^0.25.3"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0"
   }
 }

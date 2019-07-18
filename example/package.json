@@ -4,17 +4,19 @@
   "description": "",
   "main": "bundle.js",
   "scripts": {
-    "build": "rollup -c ./rollup.config.js"
+    "build-iife": "rollup -c ./rollup.iife.config.js",
+    "build-commonjs": "rollup -c ./rollup.commonjs.config.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "rollup": "^0.56.5",
-    "rollup-plugin-commonjs": "^9.0.0",
+    "@babel/polyfill": "^7.4.4",
+    "es6-object-assign": "^1.1.0",
+    "rollup": "^1.16.3",
+    "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-globals": "^1.1.0",
-    "rollup-plugin-node-resolve": "^3.2.0",
-    "rollup-plugin-polyfill": "^2.0.0"
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
   }
 }
