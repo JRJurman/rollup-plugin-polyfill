@@ -41,6 +41,56 @@ it('handles multiple entry points', async () => {
     });
 });
 
+it('handles files promoted to entry points via this.emitFile', async () => {
+    const bundle = await rollup({
+        input: '/main.js',
+        plugins: [
+            loader({
+                '/main.js': 'import "./other.js"; expect(global.polyfilled).toBe(true); global.main = true;',
+                '/other.js': 'expect(global.polyfilled).toBe(true); global.other = true;',
+                polyfill: 'global.polyfilled = true;'
+            }),
+            polyfill(['polyfill']),
+            {
+                transform(code, id) {
+                    if (id === '/other.js') {
+                        this.emitFile({type: 'chunk', id: '/other.js'})
+                    }
+                }
+            }
+        ]
+    });
+    expect((await executeBundle(bundle, 'main.js')).global).toEqual({
+        polyfilled: true,
+        main: true,
+        other: true
+    });
+    expect((await executeBundle(bundle, 'other.js')).global).toEqual({
+        polyfilled: true,
+        other: true,
+    });
+});
+
+it('works if a plugin preloads entry points via this.load', async () => {
+    const bundle = await rollup({
+        input: '/main.js',
+        plugins: [
+            {
+                async resolveId(source, importer, options) {
+                    const resolved = await this.resolve(source, importer, {...options, skipSelf: true});
+                    await this.load(resolved);
+                }
+            },
+            loader({
+                '/main.js': 'expect(global.polyfilled).toBe(true);',
+                polyfill: 'global.polyfilled = true;'
+            }),
+            polyfill(['polyfill']),
+        ]
+    });
+    await executeBundle(bundle, 'main.js');
+});
+
 // A simple plugin to resolve and load some virtual files
 function loader(modules) {
     return {
