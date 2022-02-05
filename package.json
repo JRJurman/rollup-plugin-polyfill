@@ -3,7 +3,9 @@
   "version": "3.0.0",
   "description": "plugin to prepends bundles with a source file or module",
   "main": "src/index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "jest"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JRJurman/rollup-plugin-polyfill.git"
@@ -21,10 +23,14 @@
     "url": "https://github.com/JRJurman/rollup-plugin-polyfill/issues"
   },
   "homepage": "https://github.com/JRJurman/rollup-plugin-polyfill#readme",
-  "dependencies": {
-    "magic-string": "^0.25.7"
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "peerDependencies": {
+    "rollup": "^2.67.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
     "jest": "^27.4.7",
     "rollup": "^2.67.0"
   },

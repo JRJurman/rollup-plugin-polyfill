@@ -5,14 +5,8 @@ This is useful if you only want to include certain logic in some variants of
 your build.
 
 ## API
-### `polyfill(packages[, options])`
+### `polyfill(packages)`
 * `packages` is a list of modules to be resolved in your bundle.
-* `options` (optional) is an object that includes different configurations:
-  * `method` can either be `'require'` or `'import'`, and determines if a require
-statement or import statement should be prepended to the file. By default
-it is import.
-_(If you use commonjs, you'll need to resolve require statments
-in the build)_
 
 ## Usage
 Check out the example folder to see more configurations
