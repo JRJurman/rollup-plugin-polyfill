@@ -4,7 +4,8 @@
   "description": "plugin to prepends bundles with a source file or module",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepublishOnly": "npm test"
   },
   "repository": {
     "type": "git",
