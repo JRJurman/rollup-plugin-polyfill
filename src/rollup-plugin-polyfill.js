@@ -11,8 +11,9 @@ const PROXY_SUFFIX = '?polyfill-entry';
 module.exports = (packages) => ({
   name: 'polyfill',
   options(rawOptions) {
-    // We inject the resolver in the beginning so that "catch-all-resolver" like node-resolve
-    // do not prevent our plugin from resolving entry points via proxies.
+    // We inject the resolver in the beginning so that "catch-all-resolvers"
+    // like node-resolve  do not prevent our plugin from resolving entry points
+    // via proxies.
     const plugins = Array.isArray(rawOptions.plugins)
         ? [...rawOptions.plugins]
         : rawOptions.plugins

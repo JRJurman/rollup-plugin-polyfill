@@ -193,7 +193,7 @@ it('allows polyfills to be external', async () => {
             polyfill(['polyfill'])
         ]
     });
-    expect(await getCodeMapFromBundle(bundle)).toEqual({
+    expect(await getChunkMapFromBundle(bundle)).toEqual({
         'main.js': "'use strict';\n\nrequire('polyfill');\n\nexpect(global.polyfilled).toBe(true);\n"
     })
 });
@@ -254,10 +254,10 @@ function requireWithContext(code, context) {
     return contextWithExports.module.exports;
 }
 
-function runCodeSplitTest(codeMap, entry) {
+function runCodeFromChunkMap(chunkMap, entry) {
     const requireFromOutputVia = (importer) => (source) => {
         const outputId = path.join(path.dirname(importer), source);
-        const code = codeMap[outputId];
+        const code = chunkMap[outputId];
         if (typeof code !== 'undefined') {
             return requireWithContext(
                 code,
@@ -267,17 +267,17 @@ function runCodeSplitTest(codeMap, entry) {
         return require(source);
     };
 
-    if (!codeMap[entry]) {
+    if (!chunkMap[entry]) {
         throw new Error(
             `Could not find entry "${entry}" in generated output.\nChunks:\n${Object.keys(
-                codeMap
+                chunkMap
             ).join('\n')}`
         );
     }
     const global = {};
     const context = {global}
     return {
-        exports: requireWithContext(codeMap[entry], {
+        exports: requireWithContext(chunkMap[entry], {
             require: requireFromOutputVia('main.js'),
             ...context
         }),
@@ -286,24 +286,24 @@ function runCodeSplitTest(codeMap, entry) {
 }
 
 async function executeBundle(bundle, entry) {
-    const codeMap = await getCodeMapFromBundle(bundle);
+    const chunkMap = await getChunkMapFromBundle(bundle);
     try {
-        return runCodeSplitTest(codeMap, entry);
+        return runCodeFromChunkMap(chunkMap, entry);
     } catch (error) {
-        error.message += `\n\n${stringifyCodeMap(codeMap)}`
+        error.message += `\n\n${stringifyChunkMap(chunkMap)}`
         throw error;
     }
 }
 
-async function getCodeMapFromBundle(bundle) {
+async function getChunkMapFromBundle(bundle) {
     const generated = await bundle.generate({exports: 'named', format: 'cjs'});
-    const codeMap = {};
+    const chunkMap = {};
     for (const chunk of generated.output) {
-        codeMap[chunk.fileName] = chunk.code;
+        chunkMap[chunk.fileName] = chunk.code;
     }
-    return codeMap;
+    return chunkMap;
 }
 
-function stringifyCodeMap(codeMap) {
-    return Object.keys(codeMap).map(module => `===> ${module}\n${codeMap[module]}`).join('\n\n');
+function stringifyChunkMap(chunkMap) {
+    return Object.keys(chunkMap).map(module => `===> ${module}\n${chunkMap[module]}`).join('\n\n');
 }
