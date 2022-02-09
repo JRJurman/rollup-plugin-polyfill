@@ -1,3 +1,4 @@
 node_modules
 example/package-lock.json
 example/bundle.js
+/.idea

@@ -8,7 +8,7 @@ export default {
   input: 'index.js',
   output: {
     file: 'bundle.js',
-    format: 'commonjs',
+    format: 'cjs',
     name: 'example',
     strict: false
   },

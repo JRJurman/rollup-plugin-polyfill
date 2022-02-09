@@ -1,9 +1,9 @@
 const polyfill = require('../src/index')
-const resolve = require('rollup-plugin-node-resolve')
-const commonjs = require('rollup-plugin-commonjs')
+const {nodeResolve} = require('@rollup/plugin-node-resolve')
+const commonjs = require('@rollup/plugin-commonjs')
 
 const plugins = [
-  resolve(),
+  nodeResolve(),
   commonjs(),
   polyfill(['es6-object-assign/auto', './string-reverse.js']),
 ]
