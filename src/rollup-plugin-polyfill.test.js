@@ -1,5 +1,5 @@
 const path = require('path').posix;
-const {rollup} = require('rollup');
+const {rollup, VERSION} = require('rollup');
 const commonjs = require('@rollup/plugin-commonjs');
 const polyfill = require('..');
 
@@ -140,7 +140,11 @@ it('fails with the proper error for external entry points', async () => {
             }),
             polyfill(['polyfill']),
         ]
-    })).rejects.toEqual(new Error('Entry module cannot be external (external).'))
+    })).rejects.toEqual(new Error(
+        VERSION.startsWith('3.')
+            ? 'Entry module "external" cannot be external.'
+            : 'Entry module cannot be external (external).'
+    ))
 });
 
 it('fails with the proper error for missing entry points', async () => {
@@ -152,7 +156,11 @@ it('fails with the proper error for missing entry points', async () => {
             }),
             polyfill(['polyfill']),
         ]
-    })).rejects.toEqual(new Error('Could not resolve entry module (missing).'))
+    })).rejects.toEqual(new Error(
+        VERSION.startsWith('3.')
+            ? 'Could not resolve entry module "missing".'
+            : 'Could not resolve entry module (missing).'
+    ))
 });
 
 it('ensures entry points and polyfill side effects are always respected', async () => {
