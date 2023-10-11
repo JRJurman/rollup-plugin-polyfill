@@ -141,9 +141,9 @@ it('fails with the proper error for external entry points', async () => {
             polyfill(['polyfill']),
         ]
     })).rejects.toEqual(new Error(
-        VERSION.startsWith('3.')
-            ? 'Entry module "external" cannot be external.'
-            : 'Entry module cannot be external (external).'
+        VERSION.startsWith('2.')
+            ? 'Entry module cannot be external (external).'
+            : 'Entry module "external" cannot be external.'
     ))
 });
 
@@ -157,9 +157,9 @@ it('fails with the proper error for missing entry points', async () => {
             polyfill(['polyfill']),
         ]
     })).rejects.toEqual(new Error(
-        VERSION.startsWith('3.')
-            ? 'Could not resolve entry module "missing".'
-            : 'Could not resolve entry module (missing).'
+        VERSION.startsWith('2.')
+            ? 'Could not resolve entry module (missing).'
+            : 'Could not resolve entry module "missing".'
     ))
 });
 
